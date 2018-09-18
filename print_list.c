@@ -6,40 +6,47 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:11:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/15 19:43:33 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/17 20:00:38 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	print_current(t_flags *flags, t_file *file)
+blkcnt_t	get_blkcnt(t_flags *flags, t_file **list)
 {
-	if (flags->l)
+	t_file		*head;
+	blkcnt_t	blkcnt;
+
+	head = *list;
+	blkcnt = 0;
+	while (head != NULL)
 	{
-		// PRINT LONG
+		if (flags->a || *head->name != '.')
+			blkcnt += head->stat.st_blocks;
+		head = head->next;
 	}
-	else
-	{
-		// PRINT DEFAULT
-		ft_printf("%s\n", file->f_name);
-	}
+	return (blkcnt);
 }
 
-void	print_list(t_flags *flags, t_file **file)
+void				print_current(t_flags *flags, t_file *file)
 {
-	t_file	*tmp;
+	if (flags->l)
+		print_long(flags, file);
+	else
+		ft_printf("%s\n", file->name);
+}
+
+void				print_list(t_flags *flags, t_file **list)
+{
 	t_file	*head;
 
-	head = *file;
-	while (head)
+	head = *list;
+	if (flags->l)
+		ft_printf("total %llu\n", get_blkcnt(flags, list));
+	while (head != NULL)
 	{
-		if (flags->a || *head->f_name != '.')
+		if (flags->a || *head->name != '.')
 			print_current(flags, head);
-		tmp = head->next;
-		if (!S_ISDIR(head->stat.st_mode))
-		{
-			// DEL
-		}
-		head = tmp;
+		head = head->next;
 	}
 }

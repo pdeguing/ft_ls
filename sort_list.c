@@ -6,13 +6,24 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:07:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/15 19:43:24 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/17 19:58:20 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file	*sorted_merge(t_file *a, t_file *b)
+int		get_cmp(t_flags *flags, t_file *a, t_file *b)
+{
+	int		ret;
+
+	if (flags->t)
+		ret = b->stat.st_mtimespec.tv_sec - a->stat.st_mtimespec.tv_sec;
+	else
+		ret = ft_strcmp(a->path, b->path);
+	return (ret * ((flags->r) ? -1 : 1));
+}
+
+t_file	*sorted_merge(t_flags *flags, t_file *a, t_file *b)
 {
 	t_file	*result;
 
@@ -21,15 +32,15 @@ t_file	*sorted_merge(t_file *a, t_file *b)
 		return (b);
 	if (!b)
 		return (a);
-	if (ft_strcmp(a->f_name, b->f_name) < 0)
+	if (get_cmp(flags, a, b) < 0)
 	{
 		result = a;
-		result->next = sorted_merge(a->next, b);
+		result->next = sorted_merge(flags, a->next, b);
 	}
 	else
 	{
 		result = b;
-		result->next = sorted_merge(a, b->next);
+		result->next = sorted_merge(flags, a, b->next);
 	}
 	return (result);
 }
@@ -46,10 +57,10 @@ void	split_list(t_file *head, t_file **a, t_file **b)
 
 	slow = head;
 	fast = head->next;
-	while (fast)
+	while (fast != NULL && fast->next != NULL)
 	{
 		fast = fast->next;
-		if (fast)
+		if (fast != NULL)
 		{
 			slow = slow->next;
 			fast = fast->next;
@@ -60,24 +71,17 @@ void	split_list(t_file *head, t_file **a, t_file **b)
 	slow->next = NULL;
 }
 
-void	merge_sort(t_file **ref)
+void	merge_sort(t_flags *flags, t_file **list)
 {
 	t_file	*head;
 	t_file	*a;
 	t_file	*b;
 
-	head = *ref;
-	if (!head || !head->next)
+	head = *list;
+	if (head == NULL || head->next == NULL)
 		return ;
 	split_list(head, &a, &b);
-	merge_sort(&a);
-	merge_sort(&b);
-	*ref = sorted_merge(a, b);
-}
-
-void	sort_list(t_flags *flags, t_file **ref)
-{
-	// SORT ALPHABETICALLY
-	if (!flags->t)
-		merge_sort(ref);
+	merge_sort(flags, &a);
+	merge_sort(flags, &b);
+	*list = sorted_merge(flags, a, b);
 }
