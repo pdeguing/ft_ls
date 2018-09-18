@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/17 20:24:15 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/17 20:26:44 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	start_list(t_flags *flags, char *path)
 	del_list(flags, list);
 }
 
+// INVISIBLE DIR STILL DONT SUPPORT RECURSION
 // FIX LONG PRINT OF EMPTY LIST => SHOULD NOT DISPLAY TOTAL
 // LONG FORMAT COLUMN WIDTH VARY DEPENDING ON THE SIZE OF THE LARGEST ELEMENT IN THE COLUMN
 // FIX BUG WHERE WHEN RUNNING -Ra IN LIBFT THE FIRST CHAR OF ONE FILE IS - INSTEAD OF p
-//
 // HANDLE EXCEPTIONS FOR LONG FORMAT
 // FORMAT ERRORS DISPLAY
 // LEAKS
