@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/18 17:36:51 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/19 11:48:17 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	del_list(t_flags *flags, t_file **list)
 ** This function returns a list containing a file node for each entry in the directory
 */
 
-void	get_list(t_file **list)
+void	get_list(t_flags *flags, t_file **list)
 {
 	t_dirent	*entry;
 	DIR			*dirp;
@@ -78,7 +78,7 @@ void	get_list(t_file **list)
 	}
 	while ((entry = readdir(dirp)))
 	{
-		head->next = file_new(ft_strjoin((*list)->path, entry->d_name));
+		head->next = file_new(flags, ft_strjoin((*list)->path, entry->d_name));
 		head = head->next;
 	}
 	closedir(dirp);
@@ -95,10 +95,10 @@ void	start_list(t_flags *flags, char *path)
 
 	if (!(list = (t_file **)malloc(sizeof(t_file *))))
 		return ;
-	*list = file_new(ft_strdup(path));
+	*list = file_new(flags, ft_strdup(path));
 	if (S_ISDIR((*list)->stat.st_mode))
 	{
-		get_list(list);
+		get_list(flags, list);
 		del_node(list);
 	}
 	merge_sort(flags, list);
@@ -106,9 +106,7 @@ void	start_list(t_flags *flags, char *path)
 	del_list(flags, list);
 }
 
-// FIX LONG PRINT OF EMPTY LIST => SHOULD NOT DISPLAY TOTAL
-// LONG FORMAT COLUMN WIDTH VARY DEPENDING ON THE SIZE OF THE LARGEST ELEMENT IN THE COLUMN
-// FIX BUG WHERE WHEN RUNNING -Ra IN LIBFT THE FIRST CHAR OF ONE FILE IS - INSTEAD OF p
-// HANDLE EXCEPTIONS FOR LONG FORMAT
-// FORMAT ERRORS DISPLAY
-// LEAKS
+// SYMLINK / + and @ / last permission char / date if > 6 months from present / long format for socket and fifo and devices
+// ADD * TO FT_PRINTF AND REPLACE PRINTF WITH FT_PRINTF IN PRINT FUNCTIONS
+// FORMAT ERRORS DISPLAY -> should dispay "ls: <filename>: <strerror>\n"
+// LEAKS -> do we have to free stat and passwd/grp struct? remeber to free allocated strings in struct

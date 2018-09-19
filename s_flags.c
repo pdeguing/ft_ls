@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 14:56:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/17 14:39:50 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/19 11:27:31 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_flags		*flags_new(void)
 	new->r = 0;
 	new->t = 0;
 	new->h = 0;
+	new->user_width = 0;
+	new->grp_width = 0;
+	new->max_size = 0;
 	return (new);
 }
 

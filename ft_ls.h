@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/17 18:36:49 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/19 11:32:45 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct			s_flags
 	int					r;
 	int					t;
 	int					h;
+	int					user_width;
+	int					grp_width;
+	int					max_size;
 }						t_flags;
 
 t_flags					*flags_new(void);
@@ -59,14 +62,14 @@ typedef struct			s_file
 	char				*path;
 	char				*name;
 	t_stat				stat;
-	t_passwd			*user;
-	t_group				*group;
+	char				*user;
+	char				*grp;
 	int					error;
 
 	struct s_file		*next;
 }						t_file;
 
-t_file					*file_new(char *name);
+t_file					*file_new(t_flags *flags, char *name);
 
 /*
 ** Main functions

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:11:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/17 20:00:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/19 11:04:38 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ blkcnt_t	get_blkcnt(t_flags *flags, t_file **list)
 
 void				print_current(t_flags *flags, t_file *file)
 {
+	if (file->error)
+		return ;
 	if (flags->l)
 		print_long(flags, file);
 	else
@@ -41,7 +43,9 @@ void				print_list(t_flags *flags, t_file **list)
 	t_file	*head;
 
 	head = *list;
-	if (flags->l)
+	if (head == NULL)
+		return ;
+	if (flags->l && !head->error)
 		ft_printf("total %llu\n", get_blkcnt(flags, list));
 	while (head != NULL)
 	{
