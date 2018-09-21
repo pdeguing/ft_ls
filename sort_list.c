@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:07:43 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 10:45:27 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 09:41:15 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		get_cmp(t_flags *flags, t_file *a, t_file *b)
 	int		ret;
 
 	if (flags->t)
-		ret = b->stat.st_mtimespec.tv_sec - a->stat.st_mtimespec.tv_sec;
+		ret = b->stat->st_mtimespec.tv_sec - a->stat->st_mtimespec.tv_sec;
 	else
 		ret = ft_strcmp(a->path, b->path);
 	return (ret * ((flags->r) ? -1 : 1));

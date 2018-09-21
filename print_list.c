@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:11:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 11:04:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 17:40:01 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ blkcnt_t	get_blkcnt(t_flags *flags, t_file **list)
 	while (head != NULL)
 	{
 		if (flags->a || *head->name != '.')
-			blkcnt += head->stat.st_blocks;
+			blkcnt += head->stat->st_blocks;
 		head = head->next;
 	}
 	return (blkcnt);
@@ -45,11 +45,9 @@ void				print_list(t_flags *flags, t_file **list)
 	head = *list;
 	if (head == NULL)
 		return ;
-	if (flags->l && !head->error)
-		ft_printf("total %llu\n", get_blkcnt(flags, list));
 	while (head != NULL)
 	{
-		if (flags->a || *head->name != '.')
+		if (flags->a || *head->name != '.' || head->is_arg)
 			print_current(flags, head);
 		head = head->next;
 	}

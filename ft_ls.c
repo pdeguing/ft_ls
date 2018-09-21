@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:47:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 11:34:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:26:39 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,16 @@ void	split_args(t_flags *flags, int *argc, int *i, char **argv)
 	narg = *argc - *i;
 	while (*i < *argc)
 	{
-		head = file_new(flags, ft_strdup(argv[*i]));
-		if (S_ISDIR(head->stat.st_mode))
+		head = file_new(flags, ft_strdup(argv[*i]), 1);
+		if (S_ISDIR(head->stat->st_mode))
 			add_before(dlist, head);
 		else
 			add_before(flist, head);
 		*i = *i + 1;
 	}
 	put_list(flags, narg, flist, dlist);
+	free(flist);
+	free(dlist);
 }
 
 
@@ -100,5 +102,7 @@ int		main(int argc, char **argv)
 		start_list(flags, ".");
 	else
 		split_args(flags, &argc, &i, argv); 
+	free(flags);
+	while(1);
 	return (0);
 }

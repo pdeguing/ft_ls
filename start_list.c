@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 11:48:17 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:26:38 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void	del_node(t_file **list)
 	t_file	*head;
 
 	head = *list;
+	ft_strdel(&head->path);
+	ft_strdel(&head->name);
+	ft_strdel(&head->user);
+	ft_strdel(&head->grp);
+	ft_strdel(&head->link);
+	free(head->stat);
 	*list = head->next;
 	free(head);
 	head = NULL;
@@ -43,7 +49,7 @@ void	del_list(t_flags *flags, t_file **list)
 {
 	if (!*list)
 		return ;
-	if (S_ISDIR((*list)->stat.st_mode) && flags->R && (*(*list)->name != '.' || flags->a))
+	if (S_ISDIR((*list)->stat->st_mode) && flags->R && (*(*list)->name != '.' || flags->a))
 	{
 		if (*((*list)->name + 1) && *((*list)->name + 1) != '.' && *((*list)->name + 1) != '/')
 		{
@@ -74,11 +80,13 @@ void	get_list(t_flags *flags, t_file **list)
 		head->path = ft_strffjoin(head->path, "/");
 	if (dirp == NULL)
 	{
-		perror("opendir: ");
+		head->error = 1;
+		ft_printf("ls: %s: %s\n", head->name, strerror(errno));
+		return ;
 	}
 	while ((entry = readdir(dirp)))
 	{
-		head->next = file_new(flags, ft_strjoin((*list)->path, entry->d_name));
+		head->next = file_new(flags, ft_strjoin((*list)->path, entry->d_name), 0);
 		head = head->next;
 	}
 	closedir(dirp);
@@ -95,18 +103,18 @@ void	start_list(t_flags *flags, char *path)
 
 	if (!(list = (t_file **)malloc(sizeof(t_file *))))
 		return ;
-	*list = file_new(flags, ft_strdup(path));
-	if (S_ISDIR((*list)->stat.st_mode))
+	*list = file_new(flags, ft_strdup(path), 0);
+	if (S_ISDIR((*list)->stat->st_mode))
 	{
 		get_list(flags, list);
+		if (flags->l && !(*list)->error && S_ISDIR((*list)->stat->st_mode))
+			ft_printf("total %llu\n", get_blkcnt(flags, list));
 		del_node(list);
 	}
 	merge_sort(flags, list);
 	print_list(flags, list);
 	del_list(flags, list);
+	free(list);
 }
 
-// SYMLINK / + and @ / last permission char / date if > 6 months from present / long format for socket and fifo and devices
-// ADD * TO FT_PRINTF AND REPLACE PRINTF WITH FT_PRINTF IN PRINT FUNCTIONS
-// FORMAT ERRORS DISPLAY -> should dispay "ls: <filename>: <strerror>\n"
-// LEAKS -> do we have to free stat and passwd/grp struct? remeber to free allocated strings in struct
+// BONUS => check flags already implemeted in flags, @ (ACL) and + (security)

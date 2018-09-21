@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 14:56:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 11:27:31 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 10:23:21 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_flags		*flags_new(void)
 	new->r = 0;
 	new->t = 0;
 	new->h = 0;
+	new->L = 0;
+	new->n = 0;
 	new->user_width = 0;
 	new->grp_width = 0;
 	new->max_size = 0;
@@ -49,6 +51,10 @@ void	get_flags(t_flags *flags, char *arg)
 			flags->t = 1;
 		if (arg[i] == 'h')
 			flags->h = 1;
+		if (arg[i] == 'L')
+			flags->L = 1;
+		if (arg[i] == 'n')
+			flags->n = 1;
 		// ELSE FREE STRUCTURE AND DISPLAY ILLEGAL OPTION -arg[i] AND USAGE AND EXIT
 		i++;
 	}

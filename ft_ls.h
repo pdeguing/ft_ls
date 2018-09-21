@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/19 11:32:45 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:17:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <uuid/uuid.h>
 # include <grp.h>
 # include <stdio.h>
+# include <errno.h>
+# define SIX_MONTHS 15778463
+# define IS_RECENT(timedif) (timedif < SIX_MONTHS && timedif * -1 < SIX_MONTHS)
+# define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
+# define MINOR(dev) ((int)((dev) & 0xff))
 
 /*
 ** Flags management
@@ -35,6 +40,8 @@ typedef struct			s_flags
 	int					r;
 	int					t;
 	int					h;
+	int					L;
+	int					n;
 	int					user_width;
 	int					grp_width;
 	int					max_size;
@@ -61,20 +68,24 @@ typedef struct			s_file
 {
 	char				*path;
 	char				*name;
-	t_stat				stat;
+	t_stat				*stat;
 	char				*user;
 	char				*grp;
+	char				*link;
+	int					is_arg;
 	int					error;
 
 	struct s_file		*next;
 }						t_file;
 
-t_file					*file_new(t_flags *flags, char *name);
+t_file					*file_new(t_flags *flags, char *name, int is_arg);
 
 /*
 ** Main functions
 */
 
+blkcnt_t				get_blkcnt(t_flags *flags, t_file **list);
+void					del_node(t_file **list);
 void					del_list(t_flags *flags, t_file **list);
 void					print_long(t_flags *flags, t_file *file);
 void					print_list(t_flags *flags, t_file **file);
