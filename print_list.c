@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:11:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 17:40:01 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:36:26 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ blkcnt_t	get_blkcnt(t_flags *flags, t_file **list)
 	return (blkcnt);
 }
 
-void				print_current(t_flags *flags, t_file *file)
+void		print_current(t_flags *flags, t_file *file)
 {
 	if (file->error)
 		return ;
@@ -38,7 +38,7 @@ void				print_current(t_flags *flags, t_file *file)
 		ft_printf("%s\n", file->name);
 }
 
-void				print_list(t_flags *flags, t_file **list)
+void		print_list(t_flags *flags, t_file **list)
 {
 	t_file	*head;
 

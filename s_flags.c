@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 14:56:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 10:23:21 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:39:28 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_flags		*flags_new(void)
 	return (new);
 }
 
-void	get_flags(t_flags *flags, char *arg)
+void		get_flags(t_flags *flags, char *arg)
 {
 	int		i;
 

@@ -6,13 +6,13 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:17:56 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:45:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
-# include "libft/libft.h" 
+# include "libft/libft.h"
 # include "dirent.h"
 # include <sys/stat.h>
 # include <stdlib.h>
@@ -27,6 +27,8 @@
 # define IS_RECENT(timedif) (timedif < SIX_MONTHS && timedif * -1 < SIX_MONTHS)
 # define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
 # define MINOR(dev) ((int)((dev) & 0xff))
+# define R cr
+# define L cl
 
 /*
 ** Flags management
@@ -35,12 +37,12 @@
 typedef struct			s_flags
 {
 	int					l;
-	int					R;
+	int					cr;
 	int					a;
 	int					r;
 	int					t;
 	int					h;
-	int					L;
+	int					cl;
 	int					n;
 	int					user_width;
 	int					grp_width;

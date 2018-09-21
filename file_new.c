@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 16:46:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:26:10 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:38:42 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ t_file	*file_new(t_flags *flags, char *path, int is_arg)
 	get_stat(flags, new);
 	new->link = get_link(new);
 	if (new->stat->st_size > flags->max_size)
-		flags->max_size = new->stat->st_size; // SAME HERE
+		flags->max_size = new->stat->st_size;
 	new->user = get_user(flags, new->stat->st_uid);
 	if (ft_strlen(new->user) > flags->user_width)
-		flags->user_width = ft_strlen(new->user); // COULD REPLACE BOTH LINES WITH A FUNCTION THAT RETURN BIGGEST INT
+		flags->user_width = ft_strlen(new->user);
 	new->grp = get_grp(flags, new->stat->st_gid);
 	if (ft_strlen(new->grp) > flags->grp_width)
-		flags->grp_width = ft_strlen(new->grp); // COULD REPLACE BOTH LINES WITH A FUNCTION THAT RETURN BIGGEST INT
+		flags->grp_width = ft_strlen(new->grp);
 	new->next = NULL;
 	return (new);
 }

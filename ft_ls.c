@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:47:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:26:39 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:37:50 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 ** We need a way to know if we have to print the name of the first directory listed
 ** It is the case only if if we have more than 1 argument and if there is not error.
 **
-** We cannot send the arguments one by one to start_list() as we need to sort 
+** We cannot send the arguments one by one to start_list() as we need to sort
 ** them by type and then alphabetically. I did not find any better way than two
 ** different linked list to handle this behaviour.
 */
@@ -65,9 +65,9 @@ void	split_args(t_flags *flags, int *argc, int *i, char **argv)
 	int		narg;
 
 	if (!(flist = (t_file **)malloc(sizeof(t_file *))))
-		return ; // should exit
+		return ;
 	if (!(dlist = (t_file **)malloc(sizeof(t_file *))))
-		return ; // should exit
+		return ;
 	*flist = NULL;
 	*dlist = NULL;
 	narg = *argc - *i;
@@ -85,7 +85,6 @@ void	split_args(t_flags *flags, int *argc, int *i, char **argv)
 	free(dlist);
 }
 
-
 int		main(int argc, char **argv)
 {
 	int		i;
@@ -101,8 +100,7 @@ int		main(int argc, char **argv)
 	if (i >= argc)
 		start_list(flags, ".");
 	else
-		split_args(flags, &argc, &i, argv); 
+		split_args(flags, &argc, &i, argv);
 	free(flags);
-	while(1);
 	return (0);
 }

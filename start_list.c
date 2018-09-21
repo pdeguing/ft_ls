@@ -6,19 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:26:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:31:27 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-	// 1. GET INFO ABOUT THE FILE (IF ERROR, EXIT)
-	// 2. IF DIRECTORY: -> STORE ALL ENTRIES IN LINKED LIST
-	// 					-> GET INFO ABOUT FILES
-	// 					-> SORT LINKED LIST DEPENDING ON FLAG
-	// 3. PRINT INFO DEPENDING ON FLAGS AND DELETE NODE IF NO -R (IF ERROR, PRINT ERROR)
-	// 4. IF -R, DON'T DEL DIRECTORIES IN LIST, RECURSION WHILE NODE LEFT
-	// 5. RETURN 
 
 /*
 ** Delete the first file of the list and update the start of the list
@@ -76,7 +68,7 @@ void	get_list(t_flags *flags, t_file **list)
 
 	head = *list;
 	dirp = opendir(head->path);
-	if (head->path[ft_strlen(head->path) - 1] != '/') // APPARENTLY CONDITION NOT NEEDED
+	if (head->path[ft_strlen(head->path) - 1] != '/')
 		head->path = ft_strffjoin(head->path, "/");
 	if (dirp == NULL)
 	{
@@ -116,5 +108,3 @@ void	start_list(t_flags *flags, char *path)
 	del_list(flags, list);
 	free(list);
 }
-
-// BONUS => check flags already implemeted in flags, @ (ACL) and + (security)

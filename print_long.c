@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 14:22:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 16:27:38 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/20 19:35:28 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,33 @@ void	print_date(time_t *mtime)
 
 void	print_permissions(mode_t st_mode)
 {
-		ft_printf("%c", (st_mode & S_IRUSR) ? 'r' : '-');
-		ft_printf("%c", (st_mode & S_IWUSR) ? 'w' : '-');
-		ft_printf("%c", execution_mode(st_mode, S_IXUSR));
-		ft_printf("%c", (st_mode & S_IRGRP) ? 'r' : '-');
-		ft_printf("%c", (st_mode & S_IWGRP) ? 'w' : '-');
-		ft_printf("%c", execution_mode(st_mode, S_IXGRP));
-		ft_printf("%c", (st_mode & S_IROTH) ? 'r' : '-');
-		ft_printf("%c", (st_mode & S_IWOTH) ? 'w' : '-');
-		ft_printf("%c", execution_mode(st_mode, S_IXOTH));
+	ft_printf("%c", (st_mode & S_IRUSR) ? 'r' : '-');
+	ft_printf("%c", (st_mode & S_IWUSR) ? 'w' : '-');
+	ft_printf("%c", execution_mode(st_mode, S_IXUSR));
+	ft_printf("%c", (st_mode & S_IRGRP) ? 'r' : '-');
+	ft_printf("%c", (st_mode & S_IWGRP) ? 'w' : '-');
+	ft_printf("%c", execution_mode(st_mode, S_IXGRP));
+	ft_printf("%c", (st_mode & S_IROTH) ? 'r' : '-');
+	ft_printf("%c", (st_mode & S_IWOTH) ? 'w' : '-');
+	ft_printf("%c", execution_mode(st_mode, S_IXOTH));
 }
 
 void	print_type(mode_t st_mode)
 {
-    if(S_ISREG(st_mode))
-        ft_printf("-");
-    if(S_ISDIR(st_mode))
-        ft_printf("d");
-    if(S_ISBLK(st_mode))
-        ft_printf("b");
-    if(S_ISCHR(st_mode))
-        ft_printf("c");
-    if(S_ISSOCK(st_mode))
-        ft_printf("s");
-    if(S_ISLNK(st_mode))
-        ft_printf("l");
-    if(S_ISFIFO(st_mode))
-        ft_printf("p");
+	if (S_ISREG(st_mode))
+		ft_printf("-");
+	if (S_ISDIR(st_mode))
+		ft_printf("d");
+	if (S_ISBLK(st_mode))
+		ft_printf("b");
+	if (S_ISCHR(st_mode))
+		ft_printf("c");
+	if (S_ISSOCK(st_mode))
+		ft_printf("s");
+	if (S_ISLNK(st_mode))
+		ft_printf("l");
+	if (S_ISFIFO(st_mode))
+		ft_printf("p");
 }
 
 void	print_size(t_flags *flags, t_file *file)
