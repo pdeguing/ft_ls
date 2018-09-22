@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:31:27 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/22 10:31:00 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	del_list(t_flags *flags, t_file **list)
 {
 	if (!*list)
 		return ;
-	if (S_ISDIR((*list)->stat->st_mode) && flags->R && (*(*list)->name != '.' || flags->a))
+	if (RECURSE_DIR && SHOW_INV)
 	{
-		if (*((*list)->name + 1) && *((*list)->name + 1) != '.' && *((*list)->name + 1) != '/')
+		if (NOT_PARENT && NOT_DOT)
 		{
 			ft_printf("\n%s:\n", (*list)->path);
 			start_list(flags, (*list)->path);
@@ -56,15 +56,12 @@ void	del_list(t_flags *flags, t_file **list)
 		del_list(flags, list);
 }
 
-/*
-** This function returns a list containing a file node for each entry in the directory
-*/
-
 void	get_list(t_flags *flags, t_file **list)
 {
 	t_dirent	*entry;
 	DIR			*dirp;
 	t_file		*head;
+	char		*child_path;
 
 	head = *list;
 	dirp = opendir(head->path);
@@ -78,7 +75,8 @@ void	get_list(t_flags *flags, t_file **list)
 	}
 	while ((entry = readdir(dirp)))
 	{
-		head->next = file_new(flags, ft_strjoin((*list)->path, entry->d_name), 0);
+		child_path = ft_strjoin((*list)->path, entry->d_name);
+		head->next = file_new(flags, child_path, 0);
 		head = head->next;
 	}
 	closedir(dirp);

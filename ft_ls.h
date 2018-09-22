@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:45:40 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/21 14:53:40 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define MINOR(dev) ((int)((dev) & 0xff))
 # define R cr
 # define L cl
+# define SHOW_INV (*(*list)->name != '.' || flags->a)
+# define NOT_PARENT *((*list)->name + 1) && *((*list)->name + 1) != '.'
+# define NOT_DOT *((*list)->name + 1) != '/'
+# define RECURSE_DIR S_ISDIR((*list)->stat->st_mode) && flags->R
 
 /*
 ** Flags management
@@ -50,7 +54,7 @@ typedef struct			s_flags
 }						t_flags;
 
 t_flags					*flags_new(void);
-void					get_flags(t_flags *flags, char *arg);
+int						get_flags(t_flags *flags, char *arg);
 
 /*
 ** Linked list to store files informations.
@@ -79,6 +83,17 @@ typedef struct			s_file
 
 	struct s_file		*next;
 }						t_file;
+
+/*
+** Utils
+*/
+
+char					*get_grp(t_flags *flags, gid_t st_gid);
+char					*get_name(char *path);
+void					get_stat(t_flags *flags, t_file *file);
+char					*get_user(t_flags *flags, uid_t st_uid);
+char					*get_link(t_file *file);
+char					execution_mode(mode_t st_mode, mode_t mask);
 
 t_file					*file_new(t_flags *flags, char *name, int is_arg);
 

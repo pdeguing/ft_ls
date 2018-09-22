@@ -6,42 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 14:22:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:35:28 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/21 14:12:54 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-char	execution_mode(mode_t st_mode, mode_t mask)
-{
-	char	c;
-
-	c = '-';
-	if (st_mode & mask)
-		c = 'x';
-	if (mask == S_IXUSR && (st_mode & S_ISUID))
-	{
-		if (c == 'x')
-			c = 's';
-		else
-			c = 'S';
-	}
-	if (mask == S_IXGRP && (st_mode & S_ISGID))
-	{
-		if (c == 'x')
-			c = 's';
-		else
-			c = 'S';
-	}
-	if (mask == S_IXOTH && (st_mode & S_ISVTX))
-	{
-		if (c == 'x')
-			c = 't';
-		else
-			c = 'T';
-	}
-	return (c);
-}
 
 void	print_date(time_t *mtime)
 {
@@ -87,12 +56,12 @@ void	print_type(mode_t st_mode)
 		ft_printf("p");
 }
 
-void	print_size(t_flags *flags, t_file *file)
+void	print_size(t_flags *flags, t_stat *stat)
 {
-	if (S_ISBLK(file->stat->st_mode) || S_ISCHR(file->stat->st_mode))
-		ft_printf(" %4d, %3d", MAJOR(file->stat->st_rdev), MINOR(file->stat->st_rdev));
+	if (S_ISBLK(stat->st_mode) || S_ISCHR(stat->st_mode))
+		ft_printf(" %4d, %3d", MAJOR(stat->st_rdev), MINOR(stat->st_rdev));
 	else if (!flags->h)
-		ft_printf(" %*llu", ft_intlen(flags->max_size, 10), file->stat->st_size);
+		ft_printf(" %*llu", ft_intlen(flags->max_size, 10), stat->st_size);
 }
 
 void	print_long(t_flags *flags, t_file *file)
@@ -102,7 +71,7 @@ void	print_long(t_flags *flags, t_file *file)
 	ft_printf(" %2d", file->stat->st_nlink);
 	ft_printf(" %-*s", flags->user_width, file->user);
 	ft_printf("  %-*s", flags->grp_width, file->grp);
-	print_size(flags, file);
+	print_size(flags, file->stat);
 	print_date(&file->stat->st_mtimespec.tv_sec);
 	ft_printf(" %s", file->name);
 	if (S_ISLNK(file->stat->st_mode) && !flags->L)

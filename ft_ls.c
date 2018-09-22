@@ -6,26 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:47:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:37:50 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/22 10:30:33 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-/*
-** We check for flags specifiers in the argument and create a structure to hold
-** the flags if any.
-**
-** Then we will list the current directory unless there is any name specified
-** as argument.
-**
-** We need a way to know if we have to print the name of the first directory listed
-** It is the case only if if we have more than 1 argument and if there is not error.
-**
-** We cannot send the arguments one by one to start_list() as we need to sort
-** them by type and then alphabetically. I did not find any better way than two
-** different linked list to handle this behaviour.
-*/
 
 void	add_before(t_file **list, t_file *new)
 {
@@ -94,7 +79,8 @@ int		main(int argc, char **argv)
 	i = 1;
 	while (i < argc && *argv[i] == '-')
 	{
-		get_flags(flags, argv[i]);
+		if (get_flags(flags, argv[i]) != 0)
+			return (-1);
 		i++;
 	}
 	if (i >= argc)

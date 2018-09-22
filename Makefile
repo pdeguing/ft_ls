@@ -6,13 +6,19 @@
 #    By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/15 12:59:18 by pdeguing          #+#    #+#              #
-#    Updated: 2018/09/15 13:19:24 by pdeguing         ###   ########.fr        #
+#    Updated: 2018/09/21 13:58:41 by pdeguing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ls
 CFLAGS = -Wall -Wextra -Werror
-SRC = *.c
+SRC = *.c \
+	  utils/get_grp.c \
+	  utils/get_name.c \
+	  utils/get_link.c \
+	  utils/get_user.c \
+	  utils/get_stat.c \
+	  utils/execution_mode.c
 LIB = -lft -L./libft/
 LIBFT = libft/libft.a
 

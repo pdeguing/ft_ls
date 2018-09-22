@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 14:56:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:39:28 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/22 10:26:53 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,40 @@ t_flags		*flags_new(void)
 	return (new);
 }
 
-void		get_flags(t_flags *flags, char *arg)
+int			flags_error(t_flags *flags, char c)
+{
+	free(flags);
+	flags = NULL;
+	ft_printf("ls: illegal option -- %c\n", c);
+	ft_printf("usage: ft_ls [-LRalrt] [file ...]\n");
+	return (-1);
+}
+
+int			get_flags(t_flags *flags, char *arg)
 {
 	int		i;
 
 	i = 0;
-	while (arg[i])
+	while (arg[++i])
 	{
 		if (arg[i] == 'l')
 			flags->l = 1;
-		if (arg[i] == 'R')
+		else if (arg[i] == 'R')
 			flags->R = 1;
-		if (arg[i] == 'a')
+		else if (arg[i] == 'a')
 			flags->a = 1;
-		if (arg[i] == 'r')
+		else if (arg[i] == 'r')
 			flags->r = 1;
-		if (arg[i] == 't')
+		else if (arg[i] == 't')
 			flags->t = 1;
-		if (arg[i] == 'h')
+		else if (arg[i] == 'h')
 			flags->h = 1;
-		if (arg[i] == 'L')
+		else if (arg[i] == 'L')
 			flags->L = 1;
-		if (arg[i] == 'n')
+		else if (arg[i] == 'n')
 			flags->n = 1;
-		// ELSE FREE STRUCTURE AND DISPLAY ILLEGAL OPTION -arg[i] AND USAGE AND EXIT
-		i++;
+		else
+			return (flags_error(flags, arg[i]));
 	}
+	return (0);
 }
