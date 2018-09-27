@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 16:46:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/22 10:26:19 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 11:04:34 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_file	*file_new(t_flags *flags, char *path, int is_arg)
 	new->grp = get_grp(flags, new->stat->st_gid);
 	if (ft_strlen(new->grp) > flags->grp_width)
 		flags->grp_width = ft_strlen(new->grp);
+	new->xattr = get_xattr(new->path);
 	new->next = NULL;
 	return (new);
 }

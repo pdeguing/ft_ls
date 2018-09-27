@@ -6,15 +6,11 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 15:05:07 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/22 10:31:00 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 09:37:11 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-/*
-** Delete the first file of the list and update the start of the list
-*/
 
 void	del_node(t_file **list)
 {
@@ -31,11 +27,6 @@ void	del_node(t_file **list)
 	free(head);
 	head = NULL;
 }
-
-/*
-** We free the entire list unless recursion is on and the file is a directory.
-** In that case, we call start_list() again for each directory we encounter.
-*/
 
 void	del_list(t_flags *flags, t_file **list)
 {
@@ -81,11 +72,6 @@ void	get_list(t_flags *flags, t_file **list)
 	}
 	closedir(dirp);
 }
-
-/*
-** Master function of the program, it is in charge of putting together all
-** the other functions. This way we can work on small instruction blocks.
-*/
 
 void	start_list(t_flags *flags, char *path)
 {

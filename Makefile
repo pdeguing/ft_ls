@@ -6,7 +6,7 @@
 #    By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/15 12:59:18 by pdeguing          #+#    #+#              #
-#    Updated: 2018/09/22 16:08:26 by pdeguing         ###   ########.fr        #
+#    Updated: 2018/09/27 11:04:19 by pdeguing         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC = file_new.c \
 	  utils/get_link.c \
 	  utils/get_user.c \
 	  utils/get_stat.c \
-	  utils/execution_mode.c
+	  utils/execution_mode.c \
+	  utils/get_xattr.c
+
 LIB = -lft -L./libft/
 LIBFT = libft/libft.a
 

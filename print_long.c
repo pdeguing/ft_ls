@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 14:22:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/21 14:12:54 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 10:17:58 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ void	print_long(t_flags *flags, t_file *file)
 {
 	print_type(file->stat->st_mode);
 	print_permissions(file->stat->st_mode);
+	ft_printf("%c", file->xattr);
 	ft_printf(" %2d", file->stat->st_nlink);
 	ft_printf(" %-*s", flags->user_width, file->user);
-	ft_printf("  %-*s", flags->grp_width, file->grp);
+	ft_printf("  %-*s ", flags->grp_width, file->grp);
 	print_size(flags, file->stat);
 	print_date(&file->stat->st_mtimespec.tv_sec);
 	ft_printf(" %s", file->name);

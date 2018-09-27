@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/21 14:53:40 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 11:04:09 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <grp.h>
 # include <stdio.h>
 # include <errno.h>
+# include <sys/xattr.h>
+# include <sys/acl.h>
 # define SIX_MONTHS 15778463
 # define IS_RECENT(timedif) (timedif < SIX_MONTHS && timedif * -1 < SIX_MONTHS)
 # define MAJOR(dev) ((int)(((unsigned int) (dev) >> 24) & 0xff))
@@ -79,6 +81,7 @@ typedef struct			s_file
 	char				*grp;
 	char				*link;
 	int					is_arg;
+	char				xattr;
 	int					error;
 
 	struct s_file		*next;
@@ -94,6 +97,7 @@ void					get_stat(t_flags *flags, t_file *file);
 char					*get_user(t_flags *flags, uid_t st_uid);
 char					*get_link(t_file *file);
 char					execution_mode(mode_t st_mode, mode_t mask);
+char					get_xattr(char *path);
 
 t_file					*file_new(t_flags *flags, char *name, int is_arg);
 
