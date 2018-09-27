@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 14:56:16 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/22 10:26:53 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 11:46:27 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ t_flags		*flags_new(void)
 	new->a = 0;
 	new->r = 0;
 	new->t = 0;
-	new->h = 0;
 	new->L = 0;
 	new->n = 0;
+	new->one = 0;
+	new->name_width = 0;
 	new->user_width = 0;
 	new->grp_width = 0;
 	new->max_size = 0;
@@ -58,8 +59,8 @@ int			get_flags(t_flags *flags, char *arg)
 			flags->r = 1;
 		else if (arg[i] == 't')
 			flags->t = 1;
-		else if (arg[i] == 'h')
-			flags->h = 1;
+		else if (arg[i] == '1')
+			flags->one = 1;
 		else if (arg[i] == 'L')
 			flags->L = 1;
 		else if (arg[i] == 'n')

@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 16:46:36 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/27 11:04:34 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 11:43:35 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_file	*file_new(t_flags *flags, char *path, int is_arg)
 		return (NULL);
 	new->path = path;
 	new->name = get_name(path);
+	if (ft_strlen(new->name) > flags->name_width)
+		flags->name_width = ft_strlen(new->name);
 	new->is_arg = is_arg;
 	new->error = 0;
 	get_stat(flags, new);

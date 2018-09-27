@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 17:11:22 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/20 19:36:26 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 12:29:28 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,21 @@ blkcnt_t	get_blkcnt(t_flags *flags, t_file **list)
 	return (blkcnt);
 }
 
+void		print_columns(t_flags *flags, t_file *file)
+{
+	ft_printf("%-*s", flags->name_width, file->name);
+}
+
 void		print_current(t_flags *flags, t_file *file)
 {
 	if (file->error)
 		return ;
 	if (flags->l)
 		print_long(flags, file);
-	else
+	else if (flags->one)
 		ft_printf("%s\n", file->name);
+	else
+		print_columns(flags, file);
 }
 
 void		print_list(t_flags *flags, t_file **list)
@@ -51,4 +58,6 @@ void		print_list(t_flags *flags, t_file **list)
 			print_current(flags, head);
 		head = head->next;
 	}
+	if (!flags->l && !flags->one)
+		ft_printf("\n");
 }

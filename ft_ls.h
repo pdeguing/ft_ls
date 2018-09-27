@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/15 12:48:15 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/27 11:04:09 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 12:27:15 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ typedef struct			s_flags
 	int					a;
 	int					r;
 	int					t;
-	int					h;
 	int					cl;
 	int					n;
+	int					one;
+	int					name_width;
 	int					user_width;
 	int					grp_width;
 	int					max_size;

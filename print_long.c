@@ -6,7 +6,7 @@
 /*   By: pdeguing <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 14:22:56 by pdeguing          #+#    #+#             */
-/*   Updated: 2018/09/27 10:17:58 by pdeguing         ###   ########.fr       */
+/*   Updated: 2018/09/27 11:46:56 by pdeguing         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_size(t_flags *flags, t_stat *stat)
 {
 	if (S_ISBLK(stat->st_mode) || S_ISCHR(stat->st_mode))
 		ft_printf(" %4d, %3d", MAJOR(stat->st_rdev), MINOR(stat->st_rdev));
-	else if (!flags->h)
+	else
 		ft_printf(" %*llu", ft_intlen(flags->max_size, 10), stat->st_size);
 }
 
